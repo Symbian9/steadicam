@@ -1,0 +1,15 @@
+CAMtasticDXP Drill Report
+Serial Number:0000-00-00000
+Drill File: C:\Users\Mikhail\Projects\Stedicam\PCB\BLDC_driver\gerber\cam.drl
+Format: 2.4
+Units: English (Inch)
+Step & Repeat Codes Used: NO
+
+
+TOOL		SIZE		COUNT
+====		======		=====
+
+ 1 		0.0197		28
+ 2 		0.0394		8
+ 3 		0.0551		2
+ 4 		0.1181		4
