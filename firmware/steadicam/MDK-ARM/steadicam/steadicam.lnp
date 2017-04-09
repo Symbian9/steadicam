@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp
+"steadicam\stm32f4xx_hal_spi.o"
+"steadicam\stm32f4xx_hal_rcc_ex.o"
+"steadicam\stm32f4xx_hal_flash.o"
+"steadicam\stm32f4xx_hal_pwr.o"
+"steadicam\stm32f4xx_hal_tim_ex.o"
+"steadicam\stm32f4xx_hal_rcc.o"
+"steadicam\stm32f4xx_hal.o"
+"steadicam\stm32f4xx_hal_flash_ramfunc.o"
+"steadicam\stm32f4xx_hal_gpio.o"
+"steadicam\stm32f4xx_hal_flash_ex.o"
+"steadicam\stm32f4xx_hal_dma.o"
+"steadicam\stm32f4xx_hal_dma_ex.o"
+"steadicam\stm32f4xx_hal_pwr_ex.o"
+"steadicam\stm32f4xx_hal_tim.o"
+"steadicam\stm32f4xx_hal_cortex.o"
+"steadicam\startup_stm32f407xx.o"
+"steadicam\system_stm32f4xx.o"
+"steadicam\gpio.o"
+"steadicam\main.o"
+"steadicam\spi.o"
+"steadicam\stm32f4xx_hal_msp.o"
+"steadicam\dma.o"
+"steadicam\stm32f4xx_it.o"
+--library_type=microlib --strict --scatter "steadicam\steadicam.sct"
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "steadicam.map" -o steadicam\steadicam.axf

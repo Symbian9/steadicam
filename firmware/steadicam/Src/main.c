@@ -33,6 +33,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_hal.h"
+#include "dma.h"
+#include "spi.h"
+#include "gpio.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -74,6 +77,9 @@ int main(void)
   SystemClock_Config();
 
   /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_SPI3_Init();
 
   /* USER CODE BEGIN 2 */
 
