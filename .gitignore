@@ -1,7 +1,7 @@
 docs/
 hardware/BLDC_driver/History
 hardware/BLDC_driver/Project Logs for BLDC_driver
-hardware/BLDC_driver/Project Outputs for BLDC_driver
+# hardware/BLDC_driver/Project Outputs for BLDC_driver
 hardware/BLDC_driver/gerber/gerber.zip
 firmware/other/
 firmware/steadicam/MDK-ARM/*.uvguix.*
