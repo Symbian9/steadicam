@@ -10,12 +10,18 @@
 #include "stm32f4xx.h"
 
 #define MPU9255_ACCEL_XOUT_H           59
+#define MPU9255_ACCEL_XOUT_L           60
 #define MPU9255_ACCEL_YOUT_H           61
+#define MPU9255_ACCEL_YOUT_L           62
 #define MPU9255_ACCEL_ZOUT_H           63
+#define MPU9255_ACCEL_ZOUT_L           64
 #define MPU9255_WHO_AM_I							 117
 #define MPU9255_GYRO_XOUT_H						 67
+#define MPU9255_GYRO_XOUT_L						 68
 #define MPU9255_GYRO_YOUT_H						 69
+#define MPU9255_GYRO_YOUT_L						 70
 #define MPU9255_GYRO_ZOUT_H						 71
+#define MPU9255_GYRO_ZOUT_L						 72
 #define MPU9255_ACCEL_CONF_1					 28
 
 typedef enum _MPU9255_AccelSens_t {
@@ -64,15 +70,15 @@ typedef struct _MPU9255_t {
 	
 } MPU9255_t;
 
-int8_t MPU9255_GetReg(MPU9255_t* MPU9255, uint8_t *address);
-void MPU9255_SetReg(MPU9255_t* MPU9255, uint8_t *address, uint8_t *data);
+MPU9255_Result_t MPU9255_GetReg(MPU9255_t* MPU9255, uint8_t *address, uint8_t *data);
+MPU9255_Result_t MPU9255_SetReg(MPU9255_t* MPU9255, uint8_t *address, uint8_t *data);
 
 
-MPU9255_Result_t TM_MPU9255_Init(MPU9255_t* MPU9255);
+MPU9255_Result_t MPU9255_Init(MPU9255_t* MPU9255);
 
-MPU9255_Result_t TM_MPU9255_ReadAccel(MPU9255_t* MPU9255);
-MPU9255_Result_t TM_MPU9255_ReadGyro(MPU9255_t* MPU9255);
-MPU9255_Result_t TM_MPU9255_ReadMag(MPU9255_t* MPU9255);
-MPU9255_Result_t TM_MPU9255_DataReady(MPU9255_t* MPU9255);
+MPU9255_Result_t MPU9255_ReadAccel(MPU9255_t* MPU9255);
+MPU9255_Result_t MPU9255_ReadGyro(MPU9255_t* MPU9255);
+MPU9255_Result_t MPU9255_ReadMag(MPU9255_t* MPU9255);
+MPU9255_Result_t MPU9255_DataReady(MPU9255_t* MPU9255);
 
 #endif

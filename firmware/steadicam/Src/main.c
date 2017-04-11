@@ -65,12 +65,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t Address, Data;
-	uint8_t i, SPI_Data_X1;
-	int8_t SPI_Data=0x00, 
-				 SPI_Data_X=0x00, 
-				 SPI_Data_Y=0x00, 
-				 SPI_Data_Z=0x00;
+	uint8_t Address, Data, i, SPI_Data=0x00;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -91,11 +86,15 @@ int main(void)
 	MPU9255.Init.ASense = MPU9255_AcceSens_2G; // set accel sense
 	MPU9255.Init.GSense = MPU9255_GyroSens_250DPS; // set gyro sense
 	MPU9255.Init.MSense = MPU9255_MagSens_16Bit; // set mag sense
+	/* Calculate multiplicators */
+  MPU9255.AMult = 2.0f / 32768.0f;
+  MPU9255.GMult = 250.0f / 32768.0f;
+  MPU9255.MMult = 10.0f * 4912.0f / 32768.0f;
 	
 	HAL_Delay(100);
 	Address = MPU9255_WHO_AM_I;
 	CS_SPI3_LOW();
-	SPI_Data = MPU9255_GetReg(&MPU9255, &Address);
+	MPU9255_GetReg(&MPU9255, &Address, &SPI_Data);
 	CS_SPI3_HIGH();
 	
 	// Accelerometer check
@@ -113,6 +112,21 @@ int main(void)
 				RED_LED_OFF();BLUE_LED_OFF();GREEN_LED_OFF();YELLOW_LED_OFF();
 			}
 	}
+	Address = MPU9255_ACCEL_CONF_1;
+	Data = 0x00; //0x08
+	CS_SPI3_LOW();
+	MPU9255_SetReg(&MPU9255, &Address, &Data);
+	CS_SPI3_HIGH();
+	HAL_Delay(1000);
+	
+//	CS_SPI3_LOW();
+//	MPU9255_GetReg(&MPU9255, &Address, &SPI_Data);
+//	CS_SPI3_HIGH();
+//	if (SPI_Data == 0x08){
+//		YELLOW_LED_ON();
+//		GREEN_LED_ON();
+//	}
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -122,7 +136,23 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+		MPU9255_ReadAccel(&MPU9255);
+		if (MPU9255.Ax >= 0.5f) {
+			RED_LED_ON(); GREEN_LED_OFF();
+		} else if (MPU9255.Ax <= -0.5f)   {
+			RED_LED_OFF(); GREEN_LED_ON(); 
+		} else {
+			GREEN_LED_OFF(); RED_LED_OFF();
+		}
+		
+		if (MPU9255.Ay >= 0.5f) {
+			YELLOW_LED_ON(); BLUE_LED_OFF();
+		} else if (MPU9255.Ay <= -0.5f)   {
+			YELLOW_LED_OFF(); BLUE_LED_ON(); 
+		} else {
+			YELLOW_LED_OFF(); BLUE_LED_OFF();
+		}
+		HAL_Delay(100);
   }
   /* USER CODE END 3 */
 
