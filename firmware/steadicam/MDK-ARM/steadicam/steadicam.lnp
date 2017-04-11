@@ -22,6 +22,7 @@
 "steadicam\stm32f4xx_hal_msp.o"
 "steadicam\dma.o"
 "steadicam\stm32f4xx_it.o"
+"steadicam\mpu9255.o"
 --library_type=microlib --strict --scatter "steadicam\steadicam.sct"
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

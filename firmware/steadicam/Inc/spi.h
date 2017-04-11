@@ -49,7 +49,9 @@
 extern SPI_HandleTypeDef hspi3;
 
 /* USER CODE BEGIN Private defines */
-
+/* CS for SPI3 manage */
+#define CS_SPI3_LOW() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET)
+#define CS_SPI3_HIGH() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET)
 /* USER CODE END Private defines */
 
 extern void Error_Handler(void);

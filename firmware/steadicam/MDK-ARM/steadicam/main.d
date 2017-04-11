@@ -31,3 +31,4 @@ steadicam\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 steadicam\main.o: ../Inc/dma.h
 steadicam\main.o: ../Inc/spi.h
 steadicam\main.o: ../Inc/gpio.h
+steadicam\main.o: ../Inc/mpu9255.h

@@ -38,7 +38,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "mpu9255.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,14 +58,19 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+MPU9255_t MPU9255;
 /* USER CODE END 0 */
 
 int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	uint8_t Address, Data;
+	uint8_t i, SPI_Data_X1;
+	int8_t SPI_Data=0x00, 
+				 SPI_Data_X=0x00, 
+				 SPI_Data_Y=0x00, 
+				 SPI_Data_Z=0x00;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -82,7 +87,32 @@ int main(void)
   MX_SPI3_Init();
 
   /* USER CODE BEGIN 2 */
-
+	MPU9255.SPI = &hspi3; // set spi connected to mpu9255
+	MPU9255.Init.ASense = MPU9255_AcceSens_2G; // set accel sense
+	MPU9255.Init.GSense = MPU9255_GyroSens_250DPS; // set gyro sense
+	MPU9255.Init.MSense = MPU9255_MagSens_16Bit; // set mag sense
+	
+	HAL_Delay(100);
+	Address = MPU9255_WHO_AM_I;
+	CS_SPI3_LOW();
+	SPI_Data = MPU9255_GetReg(&MPU9255, &Address);
+	CS_SPI3_HIGH();
+	
+	// Accelerometer check
+	if (SPI_Data == 0x73) { // if accel is mpu9255
+			RED_LED_ON(); BLUE_LED_ON(); GREEN_LED_ON(); YELLOW_LED_ON();				HAL_Delay(1000);
+			RED_LED_OFF(); BLUE_LED_OFF(); GREEN_LED_OFF(); YELLOW_LED_OFF();		HAL_Delay(1000);
+		} else { 
+			i=0;
+			while(i<3) {
+				RED_LED_ON();BLUE_LED_OFF();GREEN_LED_OFF();YELLOW_LED_OFF();			HAL_Delay(50);
+				RED_LED_OFF();BLUE_LED_ON();GREEN_LED_OFF();YELLOW_LED_OFF();			HAL_Delay(50);
+				RED_LED_OFF();BLUE_LED_OFF();GREEN_LED_ON();YELLOW_LED_OFF();			HAL_Delay(50);
+				RED_LED_OFF();BLUE_LED_OFF();GREEN_LED_OFF();YELLOW_LED_ON();			HAL_Delay(50);
+				i++;
+				RED_LED_OFF();BLUE_LED_OFF();GREEN_LED_OFF();YELLOW_LED_OFF();
+			}
+	}
   /* USER CODE END 2 */
 
   /* Infinite loop */
