@@ -29,4 +29,3 @@ steadicam\mpu9255.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ram
 steadicam\mpu9255.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 steadicam\mpu9255.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 steadicam\mpu9255.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
-steadicam\mpu9255.o: ../Inc/spi.h

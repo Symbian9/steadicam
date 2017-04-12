@@ -58,13 +58,14 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-MPU9255_t MPU9255;
+
 /* USER CODE END 0 */
 
 int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	MPU9255_t MPU9255;
 	uint8_t Address, Data, i, SPI_Data=0x00;
   /* USER CODE END 1 */
 
@@ -83,6 +84,8 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 	MPU9255.SPI = &hspi3; // set spi connected to mpu9255
+	MPU9255.SPI_CS_PORT = GPIOA;
+	MPU9255.SPI_CS_PIN = GPIO_PIN_15;
 	MPU9255.Init.ASense = MPU9255_AcceSens_2G; // set accel sense
 	MPU9255.Init.GSense = MPU9255_GyroSens_250DPS; // set gyro sense
 	MPU9255.Init.MSense = MPU9255_MagSens_16Bit; // set mag sense
@@ -93,9 +96,7 @@ int main(void)
 	
 	HAL_Delay(100);
 	Address = MPU9255_WHO_AM_I;
-	CS_SPI3_LOW();
 	MPU9255_GetReg(&MPU9255, &Address, &SPI_Data);
-	CS_SPI3_HIGH();
 	
 	// Accelerometer check
 	if (SPI_Data == 0x73) { // if accel is mpu9255
@@ -114,18 +115,9 @@ int main(void)
 	}
 	Address = MPU9255_ACCEL_CONF_1;
 	Data = 0x00; //0x08
-	CS_SPI3_LOW();
 	MPU9255_SetReg(&MPU9255, &Address, &Data);
-	CS_SPI3_HIGH();
 	HAL_Delay(1000);
-	
-//	CS_SPI3_LOW();
-//	MPU9255_GetReg(&MPU9255, &Address, &SPI_Data);
-//	CS_SPI3_HIGH();
-//	if (SPI_Data == 0x08){
-//		YELLOW_LED_ON();
-//		GREEN_LED_ON();
-//	}
+
 
   /* USER CODE END 2 */
 
@@ -152,7 +144,7 @@ int main(void)
 		} else {
 			YELLOW_LED_OFF(); BLUE_LED_OFF();
 		}
-		HAL_Delay(100);
+		HAL_Delay(1);
   }
   /* USER CODE END 3 */
 

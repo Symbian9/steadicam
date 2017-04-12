@@ -57,6 +57,8 @@ typedef enum _MPU9255_Result_t{
 
 typedef struct _MPU9255_t {
 		SPI_HandleTypeDef* SPI;
+		GPIO_TypeDef* SPI_CS_PORT;
+		uint16_t SPI_CS_PIN;
 		MPU9255_InitTypeDef Init;
     float Ax, Ay, Az;         /*!< Accelerometer data */
     float Gx, Gy, Gz;         /*!< Gyroscope data */
