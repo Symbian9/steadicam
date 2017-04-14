@@ -120,12 +120,57 @@ MPU9255_Result_t MPU9255_GetMultiReg(MPU9255_t* MPU9255, uint8_t *address, uint8
 };
 
 /** 
-* Initialize accelerometr with parameters
+* Initialize sensor with parameters
 * @param MPU9255	pointer to MPU9255_t structure, that contains information about MPU9255 connected
 * @return				  MPU9255 status
 */
 MPU9255_Result_t MPU9255_Init(MPU9255_t* MPU9255) {
 	
+	uint8_t address = 0x00;
+	uint8_t data = 0x00;
+	/* === Accelerometr scale range start === */
+	// get previous register value
+	address = MPU9255_ACCEL_CONF_1;
+	MPU9255_GetReg(MPU9255, &address, &data);
+	// apply bit mask
+	data|=MPU9255->Init.ASense;
+	// set new register value
+	MPU9255_SetReg(MPU9255, &address, &data);
+	/* === Accelerometr scale range end === */
+	/* Calculate multiplicators for accelerometr*/
+	if(MPU9255->Init.ASense == MPU9255_AccelSens_2G) {
+		MPU9255->AMult = 2.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_AccelSens_4G) {
+		MPU9255->AMult = 4.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_AccelSens_8G) {
+		MPU9255->AMult = 8.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_AccelSens_16G) {
+		MPU9255->AMult = 16.0f / 32768.0f;
+	}
+  
+	/* === Gyroscope scale range start === */
+	// get previous register value
+	address = MPU9255_GYRO_CONF;
+	MPU9255_GetReg(MPU9255, &address, &data);
+	// apply bit mask
+	data|=MPU9255->Init.GSense;
+	// set new register value
+	MPU9255_SetReg(MPU9255, &address, &data);
+	/* === Gyroscope scale range end === */
+	/* Calculate multiplicators for gyroscope*/
+	if(MPU9255->Init.GSense == MPU9255_GyroSens_250DPS) {
+		MPU9255->GMult = 250.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_GyroSens_500DPS) {
+		MPU9255->GMult = 500.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_GyroSens_1000DPS) {
+		MPU9255->GMult = 1000.0f / 32768.0f;
+	} else if (MPU9255->Init.ASense == MPU9255_GyroSens_2000DPS) {
+		MPU9255->GMult = 2000.0f / 32768.0f;
+	}
+	
+	// set magnetometr scale range
+	
+	return MPU9255_Result_Ok;
 }
 
 /** 
@@ -139,7 +184,7 @@ MPU9255_Result_t MPU9255_ReadAccel(MPU9255_t* MPU9255) {
 	/* Read accelerometer data */
 	uint8_t address = MPU9255_ACCEL_XOUT_H;
 	MPU9255_GetMultiReg(MPU9255, &address, data, 6);
-	
+	/* Collect raw data from _H and _L 8-bit registers to one 16-bit variable */
 	MPU9255->Ax_Raw = ((int16_t)data[0] << 8) | data[1];
 	MPU9255->Ay_Raw = ((int16_t)data[2] << 8) | data[3];  
 	MPU9255->Az_Raw = ((int16_t)data[4] << 8) | data[5];
@@ -162,7 +207,7 @@ MPU9255_Result_t MPU9255_ReadGyro(MPU9255_t* MPU9255) {
 	/* Read gyroscope data */
 	uint8_t address = MPU9255_GYRO_XOUT_H;
 	MPU9255_GetMultiReg(MPU9255, &address, data, 6);
-	
+	/* Collect raw data from _H and _L 8-bit registers to one 16-bit variable */
 	MPU9255->Gx_Raw = ((int16_t)data[0] << 8) | data[1];
 	MPU9255->Gy_Raw = ((int16_t)data[2] << 8) | data[3];  
 	MPU9255->Gz_Raw = ((int16_t)data[4] << 8) | data[5];
