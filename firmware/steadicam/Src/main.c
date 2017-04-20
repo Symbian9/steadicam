@@ -103,7 +103,7 @@ int main(void)
 			RED_LED_ON(); BLUE_LED_ON(); GREEN_LED_ON(); YELLOW_LED_ON();				HAL_Delay(1000);
 			RED_LED_OFF(); BLUE_LED_OFF(); GREEN_LED_OFF(); YELLOW_LED_OFF();		HAL_Delay(1000);
 		} else { 
-			i=0;
+			i=0;  
 			while(i<3) {
 				RED_LED_ON();BLUE_LED_OFF();GREEN_LED_OFF();YELLOW_LED_OFF();			HAL_Delay(50);
 				RED_LED_OFF();BLUE_LED_ON();GREEN_LED_OFF();YELLOW_LED_OFF();			HAL_Delay(50);
